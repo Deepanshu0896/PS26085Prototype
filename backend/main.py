@@ -18,6 +18,12 @@ import os
 # Add backend directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -238,8 +244,9 @@ async def api_pysewer_synthesize(design_rain_mm_hr: float = 35.0):
 
 
 @app.get("/health", response_model=HealthResponse)
+@app.get("/api/health", response_model=HealthResponse)
 async def health():
-    """Health check endpoint for UptimeRobot / keep-alive."""
+    """Health check endpoint for Render / UptimeRobot / keep-alive."""
     return HealthResponse()
 
 
@@ -247,4 +254,7 @@ async def health():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    port = int(os.environ.get("PORT", 8000))
+    host = os.environ.get("HOST", "0.0.0.0")
+    is_prod = os.environ.get("ENVIRONMENT", "development").lower() == "production"
+    uvicorn.run("main:app", host=host, port=port, reload=not is_prod)
