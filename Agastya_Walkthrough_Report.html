@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AGASTYA — SIH 26085 Technical Walkthrough & Verification Report</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+  @page {
+    size: A4;
+    margin: 12mm 14mm 14mm 14mm;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #1e293b;
+    background: #ffffff;
+    line-height: 1.5;
+    font-size: 10pt;
+    margin: 0;
+    padding: 0;
+  }
+
+  .header {
+    border-bottom: 2.5px solid #0284c7;
+    padding-bottom: 12px;
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .header-left h1 {
+    font-size: 22pt;
+    font-weight: 900;
+    margin: 0;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+  }
+
+  .header-left .subtitle {
+    font-size: 11pt;
+    color: #0284c7;
+    font-weight: 700;
+    margin-top: 3px;
+  }
+
+  .header-right {
+    text-align: right;
+    font-size: 8.5pt;
+    color: #64748b;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 8pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .badge-pass { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+  .badge-warn { background: #fef3c7; color: #b45309; border: 1px solid #fcd34d; }
+  .badge-fix  { background: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; }
+  .badge-crit { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+
+  h2 {
+    font-size: 13pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    border-left: 4px solid #0284c7;
+    padding-left: 8px;
+    page-break-after: avoid;
+  }
+
+  h3 {
+    font-size: 10.5pt;
+    font-weight: 700;
+    color: #334155;
+    margin-top: 12px;
+    margin-bottom: 4px;
+    page-break-after: avoid;
+  }
+
+  p {
+    margin: 0 0 8px 0;
+    color: #334155;
+    text-align: justify;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 16px 0;
+    font-size: 8pt;
+    page-break-inside: auto;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  th {
+    background: #f1f5f9;
+    color: #0f172a;
+    font-weight: 700;
+    text-align: left;
+    padding: 6px 8px;
+    border: 1px solid #cbd5e1;
+    font-size: 8pt;
+  }
+
+  td {
+    padding: 5px 8px;
+    border: 1px solid #e2e8f0;
+    vertical-align: top;
+  }
+
+  tr:nth-child(even) {
+    background: #f8fafc;
+  }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 12px 0 16px 0;
+  }
+
+  .kpi-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .kpi-title {
+    font-size: 7.5pt;
+    color: #64748b;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .kpi-value {
+    font-size: 16pt;
+    font-weight: 900;
+    color: #0284c7;
+    margin: 2px 0;
+  }
+
+  .kpi-sub {
+    font-size: 7.5pt;
+    color: #475569;
+  }
+
+  code, pre {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7.8pt;
+  }
+
+  pre {
+    background: #0f172a;
+    color: #f8fafc;
+    padding: 10px 12px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 8px 0 14px 0;
+    line-height: 1.4;
+  }
+
+  .page-break {
+    page-break-before: always;
+  }
+
+  .callout {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-left: 4px solid #16a34a;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin: 10px 0;
+    font-size: 8.5pt;
+  }
+
+  .callout-warn {
+    background: #fffbeb;
+    border: 1px solid #fef3c7;
+    border-left: 4px solid #d97706;
+  }
+
+  .footer-note {
+    text-align: center;
+    font-size: 7.5pt;
+    color: #94a3b8;
+    margin-top: 24px;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <h1>🌊 AGASTYA: TECHNICAL WALKTHROUGH</h1>
+    <div class="subtitle">SIH 2025 · Problem Statement 26085 · Minto Bridge Catchment, New Delhi</div>
+  </div>
+  <div class="header-right">
+    <div><strong>Engineering Remediation & Audit Report</strong></div>
+    <div>Coordinates: 28.6280° N, 77.2197° E</div>
+    <div>Low Point Elevation: 210.5 m</div>
+  </div>
+</div>
+
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-title">Automated Tests</div>
+    <div class="kpi-value" style="color: #16a34a;">24 / 24</div>
+    <div class="kpi-sub">100% Passed (3.48s)</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-title">Sim Latency (Mean)</div>
+    <div class="kpi-value">5.28 ms</div>
+    <div class="kpi-sub">P95: 6.02 ms</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-title">Route Latency (Mean)</div>
+    <div class="kpi-value">5.41 ms</div>
+    <div class="kpi-sub">P95: 6.04 ms</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-title">Frontend Build</div>
+    <div class="kpi-value" style="color: #0284c7;">809 ms</div>
+    <div class="kpi-sub">636 modules, 0 errors</div>
+  </div>
+</div>
+
+<h2>1. Executive Summary & Audit Overview</h2>
+<p>
+  <strong>Agastya</strong> was developed for SIH Problem Statement 26085 to solve urban flood nowcasting and emergency vehicular routing around the Minto Bridge underpass in Central New Delhi. Prior to remediation, an extensive 46-feature audit of the codebase against the Technical Report revealed several critical bugs:
+</p>
+<ul>
+  <li><strong>PySewer Key Mismatch:</strong> In <code>pysewer_adapter.py</code>, elevation and length were looked up via <code>elevation_m</code> and <code>length_m</code> while the graph stored them as <code>elevation</code> and <code>length</code>. This caused all 25 nodes to default to 215.0m elevation, flattening all hydraulic slopes to 0.002 and disabling downhill flow orientation.</li>
+  <li><strong>Zero Rain Inconsistency:</strong> Choked manholes received an artificial +12.0 cm water depth on a completely dry day (rain = 0 mm/hr).</li>
+  <li><strong>Conduit Throttling:</strong> An uncalibrated 0.025 inlet capture clamp artificially throttled Manning pipe flow conveyance.</li>
+  <li><strong>Routing Blindspots:</strong> Submerged origins and destinations (&gt;15 cm) were not detected, and edge-level flooding was unpenalized.</li>
+  <li><strong>Offline Fallback Discrepancy:</strong> The frontend reverted to an 8-node mock topology instead of the true 25-node Minto Bridge catchment when the backend was offline.</li>
+</ul>
+<p>
+  All issues were resolved. The prototype now honestly represents its datasets, enforces conservation-aware hydrology, includes 24 automated unit and integration tests, executes with sub-10ms latency, and provides a deterministic 15-step demonstration for hackathon evaluation.
+</p>
+
+<h2>2. Full 46-Feature Audit Matrix</h2>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 25px;">#</th>
+      <th style="width: 140px;">Feature</th>
+      <th style="width: 180px;">Technical Report Claim</th>
+      <th style="width: 90px;">Audit Status</th>
+      <th>Resolution & Remediation Applied</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>1</td><td><strong>Project Architecture</strong></td><td>FastAPI + React Vite + NetworkX</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Maintained clean separation on ports 8000 and 5173.</td></tr>
+    <tr><td>2</td><td><strong>Frontend Dashboard</strong></td><td>Dark glassmorphic operator interface</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Upgraded with Top KPI header, guided demo stepper, and Leaflet controls.</td></tr>
+    <tr><td>3</td><td><strong>Backend API</strong></td><td>FastAPI REST service</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Pydantic v2 schemas with detour metrics and boundary validation.</td></tr>
+    <tr><td>4</td><td><strong>API Endpoints</strong></td><td>Core simulation, routing, choke, rain</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>All 8 endpoints verified via <code>test_api.py</code> (HTTP 200).</td></tr>
+    <tr><td>5</td><td><strong>Rainfall Feed</strong></td><td>Real-time Open-Meteo REST API</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Live fetch with local caching in <code>data/cache/rain.json</code>.</td></tr>
+    <tr><td>6</td><td><strong>DEM Elevations</strong></td><td>SRTM / CartoDEM raster elevations</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>210.5m (Minto Underpass) to 216.5m (CP ridge) drives gravity slopes.</td></tr>
+    <tr><td>7</td><td><strong>OSM Road Graph</strong></td><td>OpenStreetMap Overpass road graph</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>25 junctions and 39 road segments around Minto Bridge.</td></tr>
+    <tr><td>8</td><td><strong>PySewer Conduit Graph</strong></td><td>PySewer automated sewer layout</td><td><span class="badge badge-fix">FIXED</span></td><td>Corrected attribute keys; labeled as <em>Embedded PySewer Proxy</em>.</td></tr>
+    <tr><td>9</td><td><strong>Manning Equation</strong></td><td>Full pipe capacity Q = (0.3117/n) D^(8/3) S^(1/2)</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Analytical circular constant verified: π / 4^(5/3) = 0.3116996...</td></tr>
+    <tr><td>10</td><td><strong>Rational Runoff</strong></td><td>Q = (C * I * A) / 360 [m³/s]</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Impervious C=0.85; units verified in SI m³/s.</td></tr>
+    <tr><td>11</td><td><strong>Pipe Capacity</strong></td><td>Gravity drainage conveyance</td><td><span class="badge badge-fix">FIXED</span></td><td>Removed artificial 0.025 clamp; Manning conveyance governs flow.</td></tr>
+    <tr><td>12</td><td><strong>Surcharge Model</strong></td><td>Net excess = max(0, Qin - Qcap)</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Accumulates volumetric street water depth over storm window.</td></tr>
+    <tr><td>13</td><td><strong>Ponding Depth</strong></td><td>Excess volume / ponding area * 100</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Road underpass geometry calibrated to 650 m² roadway pooling.</td></tr>
+    <tr><td>14</td><td><strong>Gravity Flow</strong></td><td>Downhill drainage along slope gradient</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>DAG routes sewer flow downhill towards Minto outfall (210.5m).</td></tr>
+    <tr><td>15</td><td><strong>Minto Bridge Sag</strong></td><td>Natural depression at 210.5m elevation</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Funneled cascade collects runoff from surrounding 214m ridges.</td></tr>
+    <tr><td>16</td><td><strong>Duration Scaling</strong></td><td>Accumulation scales with storm time</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>60 min storm depth strictly exceeds 15 min storm depth.</td></tr>
+    <tr><td>17</td><td><strong>Single-Node Choke</strong></td><td>Zeroes capacity at clogged manhole</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Reduces local pipe capacity to 0.0 m³/s and causes street ponding.</td></tr>
+    <tr><td>18</td><td><strong>Multi-Node Choke</strong></td><td>Simultaneous multi-manhole blockages</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Supports list of blocked node IDs with cumulative network impact.</td></tr>
+    <tr><td>19</td><td><strong>Backwater Surcharge</strong></td><td>Upstream backwater surge (+12cm)</td><td><span class="badge badge-fix">FIXED</span></td><td>Enforced zero on dry days; scaled with rain/duration and propagated upstream.</td></tr>
+    <tr><td>20</td><td><strong>Risk Classification</strong></td><td>5-level severity classification</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>SAFE (&lt;3cm), LOW (3-10cm), MED (10-20cm), HIGH (20-30cm), CRITICAL (≥30cm).</td></tr>
+    <tr><td>21</td><td><strong>Flood Visualization</strong></td><td>Color-coded Leaflet circle markers</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Halos, depth popups, and blocked dashed rings on Leaflet dark canvas.</td></tr>
+    <tr><td>22</td><td><strong>Ambulance Routing</strong></td><td>Avoids flooded roads (&gt;15 cm)</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Constrained Dijkstra prunes impassable corridors in &lt;6ms.</td></tr>
+    <tr><td>23</td><td><strong>Dijkstra Algorithm</strong></td><td>Shortest safe dry pathfinding</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>NetworkX Dijkstra path length minimization on safe subgraph.</td></tr>
+    <tr><td>24</td><td><strong>Edge-Level Pruning</strong></td><td>Flooded street segments avoided</td><td><span class="badge badge-fix">FIXED</span></td><td>Prunes road edges where max(depth_u, depth_v) &gt; 15 cm.</td></tr>
+    <tr><td>25</td><td><strong>ETA & Detour Delay</strong></td><td>Ambulance drive travel duration</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>30 km/h speed model; computes detour delay and extra meters.</td></tr>
+    <tr><td>26</td><td><strong>Start / End Markers</strong></td><td>Permanent callouts on map</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>🟢 START (Origin) and 🏁 DESTINATION (Hospital) callouts.</td></tr>
+    <tr><td>27</td><td><strong>PySewer Adapter</strong></td><td>Bridge to PySewer topology logic</td><td><span class="badge badge-fix">FIXED</span></td><td>Fixed dictionary keys for elevation and length.</td></tr>
+    <tr><td>28</td><td><strong>PySewer Fallback</strong></td><td>Embedded gravity sewer synthesizer</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Synthesizes 39 pipes enforcing CPHEEO slope and velocity constraints.</td></tr>
+    <tr><td>29</td><td><strong>PySewer Status API</strong></td><td>GET /api/pysewer/status</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Exposes solver mode, standards, and outfall coordinates.</td></tr>
+    <tr><td>30</td><td><strong>PySewer Synthesis API</strong></td><td>POST /api/pysewer/synthesize</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Computes commercial pipe diameters (300-1800mm) and flow capacities.</td></tr>
+    <tr><td>31</td><td><strong>Alert System</strong></td><td>Automated flood severity warnings</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Generates actionable advisories categorized by risk level.</td></tr>
+    <tr><td>32</td><td><strong>Alert Center UI</strong></td><td>3-tab floating panel</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Alerts, Route, and PySewer tabs with live counters.</td></tr>
+    <tr><td>33</td><td><strong>Movable Panel</strong></td><td>Draggable anywhere across map</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Smooth mouse drag handling with one-click reset button.</td></tr>
+    <tr><td>34</td><td><strong>Minimizable Panel</strong></td><td>Collapses into floating status pill</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Pulsing beacon chip displaying urgent flood alert count.</td></tr>
+    <tr><td>35</td><td><strong>Route Tab</strong></td><td>Evacuation corridor metrics</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Displays safe distance, drive time, avoided sectors, and detour delay.</td></tr>
+    <tr><td>36</td><td><strong>PySewer Tab</strong></td><td>Conduit inspector table</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Added flow capacity (m³/s), slope %, velocity, and cleansing flag.</td></tr>
+    <tr><td>37</td><td><strong>Offline Demo Mode</strong></td><td>Works without internet connectivity</td><td><span class="badge badge-fix">FIXED</span></td><td>Replaced 8-node dummy with 25-node topology & client solvers.</td></tr>
+    <tr><td>38</td><td><strong>Automated Test Suite</strong></td><td>Unit and integration tests</td><td><span class="badge badge-pass">CREATED</span></td><td>24 automated tests across 4 test modules (100% pass rate).</td></tr>
+    <tr><td>39</td><td><strong>Error Handling</strong></td><td>Structured API error responses</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Pydantic validation and 400/404 HTTP exception handlers.</td></tr>
+    <tr><td>40</td><td><strong>Production Build</strong></td><td>Vite TypeScript compilation</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Bundles 636 modules in 809 ms with 0 errors.</td></tr>
+    <tr><td>41</td><td><strong>Deployment Config</strong></td><td>Cloud hosting configuration</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>CORS, health check, and environment setup documented.</td></tr>
+    <tr><td>42</td><td><strong>Security & Boundaries</strong></td><td>Input boundary sanitization</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Rainfall clamped to 0–200 mm/hr, storm window to 5–360 min.</td></tr>
+    <tr><td>43</td><td><strong>Mobile Layout</strong></td><td>Responsive viewport layout</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Flexbox layout with sidebar and map overlay adaptability.</td></tr>
+    <tr><td>44</td><td><strong>Accessibility</strong></td><td>Readable text labels & legends</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Map legend explains colors, tooltips provide numeric context.</td></tr>
+    <tr><td>45</td><td><strong>Logging & Diagnostics</strong></td><td>Backend startup diagnostics</td><td><span class="badge badge-pass">FULLY IMPL</span></td><td>Logs graph node/edge counts and client request activity.</td></tr>
+    <tr><td>46</td><td><strong>Performance Claims</strong></td><td>Sub-second municipal response</td><td><span class="badge badge-pass">BENCHMARKED</span></td><td>Empirical latency measured at 5.28 ms simulation and 5.41 ms routing.</td></tr>
+  </tbody>
+</table>
+
+<div class="page-break"></div>
+
+<h2>3. Key Bugs & Hydrologic/Mathematical Fixes</h2>
+
+<h3>A. PySewer Key Mismatch Resolved</h3>
+<p>
+  In <code>pysewer_adapter.py</code>, node elevation and edge length were read via <code>data.get("elevation_m", 215.0)</code> and <code>data.get("length_m", 150.0)</code>. In <code>graph_build.py</code>, node attributes were stored as <code>"elevation"</code> and edge attributes as <code>"length"</code>. Consequently, every node defaulted to 215.0m elevation, hydraulic slopes collapsed to 0.002, and downhill flow orientation failed.
+</p>
+<div class="callout">
+  <strong>Fix Applied:</strong> Supported dual-key access <code>data.get("elevation", data.get("elevation_m", 215.0))</code> and <code>data.get("length", data.get("length_m", 50.0))</code>. Conduit edges now properly orient downhill towards the Minto Bridge outfall (210.5m), calculating real slopes and self-cleansing velocities.
+</div>
+
+<h3>B. Zero-Rain Hydrological Consistency</h3>
+<p>
+  Previously, enabling choke mode during zero rainfall caused the engine to add <code>+12.0 cm</code> of water depth to the choked manhole on a completely dry day.
+</p>
+<div class="callout">
+  <strong>Fix Applied:</strong> Enforced strict dry-weather condition: <code>if rain_mm_hr &lt;= 0: return {node: 0.0 for node in G.nodes}</code>. Zero rainfall now strictly yields 0.0 cm depth across all 25 nodes, even when manholes are marked as choked.
+</div>
+
+<h3>C. Dynamic Backwater Surcharge Propagation</h3>
+<p>
+  The previous implementation applied a static +12 cm constant to blocked nodes without scaling or upstream propagation.
+</p>
+<div class="callout">
+  <strong>Fix Applied:</strong> Surcharge is now dynamically scaled with rainfall intensity and storm accumulation duration:
+  $$\Delta d_{	ext{backwater}} = 12.0 	imes \left(rac{I}{50}ight) 	imes \left(rac{t}{30}ight) \quad [	ext{cm}]$$
+  Upstream feeding neighbors draining into the choked conduit receive a dynamic backwater head increment (+5 cm baseline), labeled as a <em>Prototype Heuristic Backwater Estimate</em>.
+</div>
+
+<h3>D. Submerged Endpoint & Edge-Level Safe Routing</h3>
+<p>
+  <code>safe_route.py</code> previously only removed intermediate flooded nodes; if the dispatch origin or target hospital itself was inundated, it allowed an ambulance to deploy into deep water.
+</p>
+<div class="callout">
+  <strong>Fix Applied:</strong> If origin or destination depth exceeds the 15 cm clearance threshold, pathfinding immediately halts with <code>reachable: False</code> and an explicit safety advisory. Connecting road edges where $\max(d_u, d_v) &gt; 15	ext{ cm}$ are pruned from the traversal graph.
+</div>
+
+<h2>4. Geospatial & Data Provenance (Real vs Synthetic)</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Provenance / Tool</th>
+      <th>Status</th>
+      <th>Role in Decision Engine</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Precipitation Feed</strong></td><td>Open-Meteo REST API (lat: 28.6280, lon: 77.2197)</td><td><span class="badge badge-pass">REAL / LIVE</span></td><td>Drives Rational runoff formula with live hourly rain rates (mm/hr).</td></tr>
+    <tr><td><strong>Road Topology</strong></td><td>OpenStreetMap (OSM Overpass API)</td><td><span class="badge badge-pass">REAL</span></td><td>Defines 25 intersections and 39 road segments for routing and conduits.</td></tr>
+    <tr><td><strong>Ground Elevation</strong></td><td>SRTM / CartoDEM 30m raster</td><td><span class="badge badge-pass">REAL (DEM)</span></td><td>Node elevations (210.5m to 216.5m) establish hydraulic gravity slopes.</td></tr>
+    <tr><td><strong>Sewer Network</strong></td><td>Auto-generated via PySewer Steiner Tree Algorithm</td><td><span class="badge badge-warn">SYNTHETIC PROXY</span></td><td>Defines stormwater conduit connectivity along street centerlines.</td></tr>
+    <tr><td><strong>Conduit Diameters</strong></td><td>CPHEEO Manual commercial concrete standards</td><td><span class="badge badge-warn">DERIVED</span></td><td>Sized to standard commercial diameters: 300 to 1800 mm.</td></tr>
+    <tr><td><strong>Inundation Model</strong></td><td>1D Manning pipe capacity + Rational overland cascade</td><td><span class="badge badge-warn">PROTOTYPE ESTIMATE</span></td><td>Fast proxy for municipal nowcasting; does not claim 2D SWMM hydrodynamics.</td></tr>
+    <tr><td><strong>Clearance Limit</strong></td><td>Standard ambulance air-intake wading limit</td><td><span class="badge badge-warn">CONFIGURABLE</span></td><td>Default 15.0 cm clearance threshold for safe vehicle routing.</td></tr>
+  </tbody>
+</table>
+
+<h2>5. Automated Test Suite Verification (24 / 24 Passed)</h2>
+<p>
+  The automated test suite in <code>backend/tests/</code> was executed via pytest. All 24 tests passed in <strong>3.48 seconds</strong>:
+</p>
+<pre>
+backend/tests/test_api.py::test_health_endpoint PASSED                   [  4%]
+backend/tests/test_api.py::test_network_endpoint PASSED                  [  8%]
+backend/tests/test_api.py::test_simulate_endpoint PASSED                 [ 12%]
+backend/tests/test_api.py::test_simulate_zero_rain PASSED                [ 16%]
+backend/tests/test_api.py::test_route_endpoint PASSED                    [ 20%]
+backend/tests/test_api.py::test_choke_endpoint PASSED                    [ 25%]
+backend/tests/test_api.py::test_pysewer_endpoints PASSED                 [ 29%]
+backend/tests/test_api.py::test_rain_live_endpoint PASSED                [ 33%]
+backend/tests/test_hydraulics.py::test_zero_rain_zero_depth PASSED       [ 37%]
+backend/tests/test_hydraulics.py::test_pipe_capacity_positive PASSED     [ 41%]
+backend/tests/test_hydraulics.py::test_heavy_rain_higher_depth PASSED    [ 45%]
+backend/tests/test_hydraulics.py::test_duration_scaling_accumulation PASSED [ 50%]
+backend/tests/test_hydraulics.py::test_single_node_choke_impact PASSED   [ 54%]
+backend/tests/test_hydraulics.py::test_multi_node_choke_accumulation PASSED [ 58%]
+backend/tests/test_hydraulics.py::test_minto_underpass_sag_concentration PASSED [ 62%]
+backend/tests/test_hydraulics.py::test_risk_classification PASSED        [ 66%]
+backend/tests/test_pysewer.py::test_pysewer_status_metadata PASSED       [ 70%]
+backend/tests/test_pysewer.py::test_pysewer_synthesize_topology PASSED   [ 75%]
+backend/tests/test_pysewer.py::test_real_elevation_differences_affect_slopes PASSED [ 79%]
+backend/tests/test_routing.py::test_dry_routing_shortest_path PASSED     [ 83%]
+backend/tests/test_routing.py::test_flooded_nodes_avoided PASSED         [ 87%]
+backend/tests/test_routing.py::test_submerged_origin_returns_unreachable PASSED [ 91%]
+backend/tests/test_routing.py::test_submerged_destination_returns_unreachable PASSED [ 95%]
+backend/tests/test_routing.py::test_no_viable_path_all_blocked PASSED    [100%]
+======================== 24 passed, 1 warning in 3.48s ========================
+</pre>
+
+<div class="page-break"></div>
+
+<h2>6. Empirical Latency Benchmarks</h2>
+<p>
+  Measured via <code>backend/tests/benchmark_api.py</code> across 30 iterations per endpoint on local hardware:
+</p>
+<table>
+  <thead>
+    <tr>
+      <th>Endpoint</th>
+      <th>Method</th>
+      <th>Functionality</th>
+      <th>Mean Latency</th>
+      <th>Median</th>
+      <th>P95 Latency</th>
+      <th>Municipal Requirement</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>/api/simulate</strong></td><td><code>POST</code></td><td>25-Node Inundation & Surcharge Solver</td><td><strong>5.28 ms</strong></td><td>5.23 ms</td><td>6.02 ms</td><td>&lt; 50 ms (PASSED)</td></tr>
+    <tr><td><strong>/api/route</strong></td><td><code>POST</code></td><td>Dijkstra Safe Ambulance Routing</td><td><strong>5.41 ms</strong></td><td>5.38 ms</td><td>6.04 ms</td><td>&lt; 50 ms (PASSED)</td></tr>
+    <tr><td><strong>/api/choke</strong></td><td><code>POST</code></td><td>Multi-Node Choke & Backwater Surcharge</td><td><strong>8.22 ms</strong></td><td>5.39 ms</td><td>25.43 ms</td><td>&lt; 50 ms (PASSED)</td></tr>
+    <tr><td><strong>/api/pysewer/status</strong></td><td><code>GET</code></td><td>PySewer Methodology & Constraints</td><td><strong>4.60 ms</strong></td><td>4.62 ms</td><td>5.05 ms</td><td>&lt; 50 ms (PASSED)</td></tr>
+    <tr><td><strong>/api/pysewer/synthesize</strong></td><td><code>POST</code></td><td>39-Conduit Pipe Layout & Sizing</td><td><strong>7.41 ms</strong></td><td>7.19 ms</td><td>9.04 ms</td><td>&lt; 50 ms (PASSED)</td></tr>
+    <tr><td><strong>/api/network</strong></td><td><code>GET</code></td><td>GeoJSON Graph Topology</td><td><strong>6.22 ms</strong></td><td>6.20 ms</td><td>6.90 ms</td><td>&lt; 50 ms (PASSED)</td></tr>
+  </tbody>
+</table>
+
+<h2>7. Final SIH-Safe Claim Audit</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Claim in Technical Pitch</th>
+      <th>Safe in SIH?</th>
+      <th>Defensible Scientific Justification</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><em>"Real-time Open-Meteo rainfall"</em></td><td><span class="badge badge-pass">SAFE</span></td><td>Genuinely calls live Open-Meteo REST API with fallback to local cache.</td></tr>
+    <tr><td><em>"PySewer gravity layout synthesis"</em></td><td><span class="badge badge-pass">SAFE</span></td><td>Generates gravity DAG towards Minto outfall enforcing CPHEEO slope/velocity limits.</td></tr>
+    <tr><td><em>"Multi-node manhole choke simulation"</em></td><td><span class="badge badge-pass">SAFE</span></td><td>Clicking multiple manholes zeroes capacity and dynamically propagates upstream surcharge.</td></tr>
+    <tr><td><em>"Dijkstra safe ambulance routing"</em></td><td><span class="badge badge-pass">SAFE</span></td><td>NetworkX Dijkstra pathfinding prunes flooded roads &gt;15 cm in &lt;6 ms.</td></tr>
+    <tr><td><em>"Sub-second municipal response"</em></td><td><span class="badge badge-pass">SAFE</span></td><td>Empirically verified at 5.28 ms mean simulation latency.</td></tr>
+    <tr><td><em>"Full 2D hydrodynamic solver (SWMM/Telemac)"</em></td><td><span class="badge badge-crit">UNSAFE</span></td><td><strong>Do not claim 2D hydrodynamics.</strong> Claim: <em>"Physics-guided 1D Manning pipe conveyance with Rational overland sag cascade."</em></td></tr>
+    <tr><td><em>"Real municipal sewer blueprints"</em></td><td><span class="badge badge-crit">UNSAFE</span></td><td><strong>Do not claim real municipal sewer data.</strong> Claim: <em>"Synthetic proxy drainage graph generated using PySewer methodology from OSM centerlines and DEM."</em></td></tr>
+    <tr><td><em>"Historical sensor validation (85% accuracy)"</em></td><td><span class="badge badge-crit">UNSAFE</span></td><td><strong>Do not claim validation against IoT sensors</strong> unless empirical sensor logs exist. Claim: <em>"Topographically calibrated to historical Minto Bridge underpass sag blackspot."</em></td></tr>
+  </tbody>
+</table>
+
+<h2>8. 15-Step Judge Demonstration Sequence</h2>
+<ol>
+  <li><strong>Launch App:</strong> Open <code>http://localhost:5173</code>. Point out the dark glassmorphic dashboard, Minto Bridge centered map, and 6 top KPI cards.</li>
+  <li><strong>Step 1 — Dry Baseline:</strong> Click <code>1. Dry</code> in the demo bar. Rain is set to 0 mm/hr. Observe max flood depth is strictly 0.0 cm across all 25 nodes.</li>
+  <li><strong>Step 2 — Moderate Rain:</strong> Click <code>2. Moderate</code>. Rain is set to 35 mm/hr for 30 minutes. Minor pooling appears at Minto Underpass (6.4 cm, Low Risk, cyan).</li>
+  <li><strong>Step 3 — Monsoon Downpour:</strong> Click <code>3. Downpour</code>. Rain surges to 75 mm/hr. Point out Minto Bridge Underpass turning <strong>CRITICAL RED</strong> (&gt;30 cm).</li>
+  <li><strong>Step 4 — Storm Duration Scaling:</strong> Drag the Duration slider from 15 min to 60 min. Show cumulative volume scaling flood depth from 13.5 cm to 35.8 cm.</li>
+  <li><strong>Step 5 — Enable Choke Simulation:</strong> Click <code>4. Choke</code> or toggle the Choke switch. Blocked manhole halo rings appear on the map.</li>
+  <li><strong>Step 6 — Multi-Node Silt Clog:</strong> Click additional nodes (e.g. <code>ddu_marg_west</code>). Observe multiple blocked halos.</li>
+  <li><strong>Step 7 — Backwater Surcharge:</strong> Show upstream neighbors surcharging due to conduit blockage.</li>
+  <li><strong>Step 8 — Open Alert Center:</strong> Click the Alert Center. Show severity filters (All / Critical / High) and individual alert dismissal.</li>
+  <li><strong>Step 9 — Drag & Minimize Alert Panel:</strong> Drag the panel across the map by its header grip. Click <code>─</code> to collapse it into the floating glowing status pill. Click <code>↺ Reset</code> to restore.</li>
+  <li><strong>Step 10 — Open Safe Ambulance Corridor:</strong> Click <code>5. Route</code> in the demo bar or toggle the Ambulance Route switch.</li>
+  <li><strong>Step 11 — Origin & Destination Callouts:</strong> Point out the green <strong>🟢 START: CP Outer Circle North</strong> and red <strong>🏁 DESTINATION: Barakhamba Road</strong> markers on the map.</li>
+  <li><strong>Step 12 — Flooded Segment Bypass:</strong> Show how the green safe corridor dynamically diverts away from the submerged Minto Bridge underpass.</li>
+  <li><strong>Step 13 — Swap Direction:</strong> Click <code>⇅ Swap Direction</code> in the sidebar. Dijkstra immediately recalculates the return evacuation corridor in &lt;6 ms.</li>
+  <li><strong>Step 14 — PySewer Gravity Inspector:</strong> Switch to the <strong>PySewer</strong> tab in the Alert Panel. Show the 39 synthesized conduits, CPHEEO self-cleansing velocity compliance (v ≥ 0.6 m/s), slope percentages, and full-pipe flow capacities (Qcap).</li>
+  <li><strong>Step 15 — Offline Resilience:</strong> Disconnect Wi-Fi or stop the backend. The dashboard automatically switches to <strong>OFFLINE DEMO MODE</strong> and continues computing simulation and routing without interruption.</li>
+</ol>
+
+<div class="footer-note">
+  Agastya — Physics-Guided Urban Flood Nowcasting Prototype · SIH 2025 (Problem 26085) · Compiled via Edge Headless
+</div>
+
+</body>
+</html>

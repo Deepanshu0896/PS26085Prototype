@@ -1,0 +1,493 @@
+{
+  "nodes": {
+    "minto_bridge_center": {
+      "lat": 28.628,
+      "lon": 77.2197,
+      "elevation": 210.5,
+      "catch_area": 3500,
+      "name": "Minto Bridge Underpass"
+    },
+    "minto_north": {
+      "lat": 28.6295,
+      "lon": 77.2195,
+      "elevation": 214.2,
+      "catch_area": 2500,
+      "name": "Minto Road North"
+    },
+    "minto_south": {
+      "lat": 28.6265,
+      "lon": 77.2199,
+      "elevation": 213.8,
+      "catch_area": 2200,
+      "name": "Minto Road South"
+    },
+    "ddu_marg_west": {
+      "lat": 28.6278,
+      "lon": 77.2175,
+      "elevation": 214.0,
+      "catch_area": 2800,
+      "name": "DDU Marg West"
+    },
+    "ddu_marg_east": {
+      "lat": 28.6282,
+      "lon": 77.222,
+      "elevation": 213.5,
+      "catch_area": 2600,
+      "name": "DDU Marg East"
+    },
+    "barakhamba_junction": {
+      "lat": 28.631,
+      "lon": 77.221,
+      "elevation": 215.0,
+      "catch_area": 3000,
+      "name": "Barakhamba Road Junction"
+    },
+    "barakhamba_mid": {
+      "lat": 28.6305,
+      "lon": 77.224,
+      "elevation": 214.5,
+      "catch_area": 2200,
+      "name": "Barakhamba Road Mid"
+    },
+    "cp_inner": {
+      "lat": 28.6315,
+      "lon": 77.219,
+      "elevation": 216.0,
+      "catch_area": 4000,
+      "name": "Connaught Place Inner Circle"
+    },
+    "cp_outer_n": {
+      "lat": 28.634,
+      "lon": 77.2185,
+      "elevation": 216.5,
+      "catch_area": 3200,
+      "name": "CP Outer Circle North"
+    },
+    "cp_outer_e": {
+      "lat": 28.632,
+      "lon": 77.225,
+      "elevation": 215.5,
+      "catch_area": 2800,
+      "name": "CP Outer Circle East"
+    },
+    "kg_marg_west": {
+      "lat": 28.626,
+      "lon": 77.218,
+      "elevation": 213.0,
+      "catch_area": 2500,
+      "name": "KG Marg West"
+    },
+    "kg_marg_center": {
+      "lat": 28.625,
+      "lon": 77.221,
+      "elevation": 213.2,
+      "catch_area": 2700,
+      "name": "KG Marg Center"
+    },
+    "kg_marg_east": {
+      "lat": 28.6255,
+      "lon": 77.224,
+      "elevation": 213.8,
+      "catch_area": 2400,
+      "name": "KG Marg East"
+    },
+    "janpath_north": {
+      "lat": 28.629,
+      "lon": 77.2165,
+      "elevation": 214.8,
+      "catch_area": 2600,
+      "name": "Janpath North"
+    },
+    "janpath_south": {
+      "lat": 28.624,
+      "lon": 77.217,
+      "elevation": 213.5,
+      "catch_area": 2300,
+      "name": "Janpath South"
+    },
+    "ndls_approach": {
+      "lat": 28.642,
+      "lon": 77.2195,
+      "elevation": 212.0,
+      "catch_area": 4500,
+      "name": "NDLS Station Approach"
+    },
+    "chelmsford_road": {
+      "lat": 28.638,
+      "lon": 77.219,
+      "elevation": 213.0,
+      "catch_area": 3000,
+      "name": "Chelmsford Road"
+    },
+    "panchkuian_road": {
+      "lat": 28.636,
+      "lon": 77.217,
+      "elevation": 214.0,
+      "catch_area": 2800,
+      "name": "Panchkuian Road"
+    },
+    "tilak_bridge": {
+      "lat": 28.625,
+      "lon": 77.229,
+      "elevation": 211.0,
+      "catch_area": 3200,
+      "name": "Tilak Bridge Underpass"
+    },
+    "ito_approach": {
+      "lat": 28.6235,
+      "lon": 77.232,
+      "elevation": 212.5,
+      "catch_area": 2800,
+      "name": "ITO Approach Road"
+    },
+    "bhavbhuti_west": {
+      "lat": 28.63,
+      "lon": 77.216,
+      "elevation": 215.2,
+      "catch_area": 2000,
+      "name": "Bhavbhuti Marg West"
+    },
+    "bhavbhuti_east": {
+      "lat": 28.6298,
+      "lon": 77.223,
+      "elevation": 214.8,
+      "catch_area": 2100,
+      "name": "Bhavbhuti Marg East"
+    },
+    "fire_station": {
+      "lat": 28.6325,
+      "lon": 77.2165,
+      "elevation": 215.5,
+      "catch_area": 1800,
+      "name": "Fire Station Lane"
+    },
+    "rml_hospital": {
+      "lat": 28.627,
+      "lon": 77.2135,
+      "elevation": 214.0,
+      "catch_area": 3500,
+      "name": "RML Hospital"
+    },
+    "lady_hardinge": {
+      "lat": 28.634,
+      "lon": 77.214,
+      "elevation": 215.0,
+      "catch_area": 3000,
+      "name": "Lady Hardinge Hospital"
+    }
+  },
+  "edges": [
+    {
+      "u": "minto_bridge_center",
+      "v": "minto_north",
+      "length": 167.9,
+      "slope": -0.022033,
+      "diameter": 0.45,
+      "roughness": 0.013
+    },
+    {
+      "u": "minto_bridge_center",
+      "v": "minto_south",
+      "length": 167.9,
+      "slope": -0.019651,
+      "diameter": 0.45,
+      "roughness": 0.013
+    },
+    {
+      "u": "minto_bridge_center",
+      "v": "ddu_marg_west",
+      "length": 215.9,
+      "slope": -0.016213,
+      "diameter": 0.6,
+      "roughness": 0.013
+    },
+    {
+      "u": "minto_bridge_center",
+      "v": "ddu_marg_east",
+      "length": 225.6,
+      "slope": -0.013299,
+      "diameter": 0.6,
+      "roughness": 0.013
+    },
+    {
+      "u": "ddu_marg_west",
+      "v": "janpath_north",
+      "length": 165.3,
+      "slope": -0.004839,
+      "diameter": 0.5,
+      "roughness": 0.013
+    },
+    {
+      "u": "ddu_marg_east",
+      "v": "barakhamba_mid",
+      "length": 321.7,
+      "slope": -0.003108,
+      "diameter": 0.5,
+      "roughness": 0.013
+    },
+    {
+      "u": "ddu_marg_east",
+      "v": "kg_marg_east",
+      "length": 358.1,
+      "slope": -0.000838,
+      "diameter": 0.4,
+      "roughness": 0.013
+    },
+    {
+      "u": "barakhamba_junction",
+      "v": "minto_north",
+      "length": 221.9,
+      "slope": 0.003605,
+      "diameter": 0.5,
+      "roughness": 0.013
+    },
+    {
+      "u": "barakhamba_junction",
+      "v": "barakhamba_mid",
+      "length": 298.0,
+      "slope": 0.001678,
+      "diameter": 0.5,
+      "roughness": 0.013
+    },
+    {
+      "u": "barakhamba_junction",
+      "v": "cp_inner",
+      "length": 203.0,
+      "slope": -0.004927,
+      "diameter": 0.4,
+      "roughness": 0.013
+    },
+    {
+      "u": "barakhamba_mid",
+      "v": "cp_outer_e",
+      "length": 193.2,
+      "slope": -0.005175,
+      "diameter": 0.4,
+      "roughness": 0.013
+    },
+    {
+      "u": "barakhamba_mid",
+      "v": "bhavbhuti_east",
+      "length": 124.8,
+      "slope": -0.002403,
+      "diameter": 0.35,
+      "roughness": 0.013
+    },
+    {
+      "u": "cp_inner",
+      "v": "cp_outer_n",
+      "length": 282.2,
+      "slope": -0.001772,
+      "diameter": 0.5,
+      "roughness": 0.013
+    },
+    {
+      "u": "cp_inner",
+      "v": "fire_station",
+      "length": 268.1,
+      "slope": 0.001865,
+      "diameter": 0.35,
+      "roughness": 0.013
+    },
+    {
+      "u": "cp_inner",
+      "v": "bhavbhuti_west",
+      "length": 337.0,
+      "slope": 0.002374,
+      "diameter": 0.35,
+      "roughness": 0.013
+    },
+    {
+      "u": "cp_outer_n",
+      "v": "panchkuian_road",
+      "length": 266.2,
+      "slope": 0.00939,
+      "diameter": 0.45,
+      "roughness": 0.013
+    },
+    {
+      "u": "cp_outer_n",
+      "v": "chelmsford_road",
+      "length": 447.4,
+      "slope": 0.007822,
+      "diameter": 0.45,
+      "roughness": 0.013
+    },
+    {
+      "u": "cp_outer_e",
+      "v": "bhavbhuti_east",
+      "length": 313.0,
+      "slope": 0.002237,
+      "diameter": 0.35,
+      "roughness": 0.015
+    },
+    {
+      "u": "kg_marg_west",
+      "v": "minto_south",
+      "length": 193.6,
+      "slope": -0.004132,
+      "diameter": 0.4,
+      "roughness": 0.013
+    },
+    {
+      "u": "kg_marg_west",
+      "v": "janpath_south",
+      "length": 242.9,
+      "slope": -0.002059,
+      "diameter": 0.4,
+      "roughness": 0.013
+    },
+    {
+      "u": "kg_marg_west",
+      "v": "kg_marg_center",
+      "length": 313.2,
+      "slope": -0.000639,
+      "diameter": 0.5,
+      "roughness": 0.013
+    },
+    {
+      "u": "kg_marg_center",
+      "v": "kg_marg_east",
+      "length": 298.0,
+      "slope": -0.002013,
+      "diameter": 0.5,
+      "roughness": 0.013
+    },
+    {
+      "u": "kg_marg_east",
+      "v": "tilak_bridge",
+      "length": 491.2,
+      "slope": 0.005701,
+      "diameter": 0.45,
+      "roughness": 0.013
+    },
+    {
+      "u": "janpath_north",
+      "v": "janpath_south",
+      "length": 558.1,
+      "slope": 0.002329,
+      "diameter": 0.5,
+      "roughness": 0.013
+    },
+    {
+      "u": "janpath_north",
+      "v": "bhavbhuti_west",
+      "length": 121.4,
+      "slope": -0.003294,
+      "diameter": 0.35,
+      "roughness": 0.013
+    },
+    {
+      "u": "janpath_south",
+      "v": "rml_hospital",
+      "length": 477.5,
+      "slope": -0.001047,
+      "diameter": 0.4,
+      "roughness": 0.013
+    },
+    {
+      "u": "ndls_approach",
+      "v": "chelmsford_road",
+      "length": 447.4,
+      "slope": -0.002235,
+      "diameter": 0.6,
+      "roughness": 0.015
+    },
+    {
+      "u": "chelmsford_road",
+      "v": "panchkuian_road",
+      "length": 295.9,
+      "slope": -0.00338,
+      "diameter": 0.5,
+      "roughness": 0.013
+    },
+    {
+      "u": "panchkuian_road",
+      "v": "lady_hardinge",
+      "length": 367.7,
+      "slope": -0.00272,
+      "diameter": 0.4,
+      "roughness": 0.013
+    },
+    {
+      "u": "panchkuian_road",
+      "v": "fire_station",
+      "length": 392.2,
+      "slope": -0.003824,
+      "diameter": 0.35,
+      "roughness": 0.013
+    },
+    {
+      "u": "tilak_bridge",
+      "v": "ito_approach",
+      "length": 337.0,
+      "slope": -0.004451,
+      "diameter": 0.5,
+      "roughness": 0.013
+    },
+    {
+      "u": "tilak_bridge",
+      "v": "minto_south",
+      "length": 903.7,
+      "slope": -0.003098,
+      "diameter": 0.4,
+      "roughness": 0.013
+    },
+    {
+      "u": "bhavbhuti_west",
+      "v": "bhavbhuti_east",
+      "length": 683.6,
+      "slope": 0.000585,
+      "diameter": 0.35,
+      "roughness": 0.013
+    },
+    {
+      "u": "bhavbhuti_west",
+      "v": "fire_station",
+      "length": 282.2,
+      "slope": -0.001063,
+      "diameter": 0.3,
+      "roughness": 0.013
+    },
+    {
+      "u": "rml_hospital",
+      "v": "ddu_marg_west",
+      "length": 400.4,
+      "slope": 0.0,
+      "diameter": 0.4,
+      "roughness": 0.013
+    },
+    {
+      "u": "lady_hardinge",
+      "v": "cp_outer_n",
+      "length": 439.2,
+      "slope": -0.003415,
+      "diameter": 0.4,
+      "roughness": 0.013
+    },
+    {
+      "u": "lady_hardinge",
+      "v": "fire_station",
+      "length": 295.6,
+      "slope": -0.001692,
+      "diameter": 0.35,
+      "roughness": 0.013
+    },
+    {
+      "u": "minto_north",
+      "v": "bhavbhuti_east",
+      "length": 343.2,
+      "slope": -0.001748,
+      "diameter": 0.35,
+      "roughness": 0.013
+    },
+    {
+      "u": "minto_south",
+      "v": "kg_marg_center",
+      "length": 198.4,
+      "slope": 0.003025,
+      "diameter": 0.4,
+      "roughness": 0.013
+    }
+  ]
+}
