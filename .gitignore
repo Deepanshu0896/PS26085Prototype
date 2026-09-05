@@ -7,17 +7,37 @@ ENV/
 
 # Node Modules & Frontend Build
 frontend/node_modules/
+node_modules/
 frontend/dist/
+dist/
 frontend/.vite/
+.vite/
 
-# Python Cache
+# Python Cache & Testing
 __pycache__/
 *.py[cod]
 *$py.class
 *.pytest_cache/
 .pytest_cache/
+coverage/
+.coverage
+htmlcov/
 
-# OS & Temp
+# Environment Variables & Secrets
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Logs & Temporary Files
+*.log
+logs/
+*.tmp
+*.bak
+*.swp
+
+# OS & Editor Artifacts
 .DS_Store
 Thumbs.db
-*.log
+.idea/
+.vscode/
