@@ -2,10 +2,10 @@
   "location": "Minto Bridge, New Delhi",
   "latitude": 28.628,
   "longitude": 77.2197,
-  "timestamp": "2026-09-05T16:17:24.337239",
-  "current_rain_mm": 0.7,
-  "current_temperature_c": 27.2,
-  "wind_speed_kmh": 6.5,
+  "timestamp": "2026-09-05T17:15:12.117724",
+  "current_rain_mm": 0.2,
+  "current_temperature_c": 27.3,
+  "wind_speed_kmh": 6.6,
   "hourly_forecast": [
     {
       "time": "2026-09-05T00:00",
