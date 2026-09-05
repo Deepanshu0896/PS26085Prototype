@@ -103,3 +103,45 @@ def test_rain_live_endpoint():
     data = res.json()
     assert "location" in data
     assert "hourly_forecast" in data
+
+
+# ─── CORS Policy Verification ─────────────────────────────────
+
+def test_cors_local_origins_allowed():
+    for origin in ["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:3000"]:
+        res = client.get("/health", headers={"Origin": origin})
+        assert res.status_code == 200
+        assert res.headers.get("access-control-allow-origin") == origin
+        assert res.headers.get("access-control-allow-credentials") == "true"
+        assert res.headers.get("access-control-allow-origin") != "*"
+
+
+def test_cors_vercel_production_origin_allowed():
+    for origin in ["https://agastya.vercel.app", "https://agastya-preview-deploy.vercel.app"]:
+        res = client.get("/health", headers={"Origin": origin})
+        assert res.status_code == 200
+        assert res.headers.get("access-control-allow-origin") == origin
+        assert res.headers.get("access-control-allow-origin") != "*"
+
+
+def test_cors_unauthorized_origin_rejected():
+    res = client.get("/health", headers={"Origin": "https://malicious-attacker.com"})
+    assert res.status_code == 200
+    # Starlette CORSMiddleware omits access-control-allow-origin header for disallowed origins
+    assert "access-control-allow-origin" not in res.headers
+
+
+def test_cors_preflight_options():
+    res = client.options(
+        "/api/simulate",
+        headers={
+            "Origin": "https://agastya.vercel.app",
+            "Access-Control-Request-Method": "POST",
+            "Access-Control-Request-Headers": "content-type",
+        },
+    )
+    assert res.status_code == 200
+    assert res.headers.get("access-control-allow-origin") == "https://agastya.vercel.app"
+    assert "POST" in res.headers.get("access-control-allow-methods", "")
+    assert res.headers.get("access-control-allow-origin") != "*"
+

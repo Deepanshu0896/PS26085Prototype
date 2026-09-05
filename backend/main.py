@@ -52,12 +52,31 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# Allow frontend to call API (CORS)
+# ─── CORS Configuration ────────────────────────────────────────
+# In development and production, explicitly whitelist authorized origins.
+# Never default to unrestricted "*" in production.
+default_origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:4173",
+    "http://127.0.0.1:4173",
+]
+
+env_origins = os.environ.get("FRONTEND_ORIGIN", "") or os.environ.get("FRONTEND_ORIGINS", "")
+if env_origins:
+    custom_origins = [orig.strip().rstrip("/") for orig in env_origins.replace(";", ",").split(",") if orig.strip()]
+    allowed_origins = list(dict.fromkeys(default_origins + custom_origins))
+else:
+    allowed_origins = default_origins
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, restrict to your Vercel domain
+    allow_origins=allowed_origins,
+    allow_origin_regex=r"^https:\/\/.*\.vercel\.app$",
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "OPTIONS", "HEAD"],
     allow_headers=["*"],
 )
 
