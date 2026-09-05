@@ -2,7 +2,7 @@ services:
   # AGASTYA FastAPI Backend
   - type: web
     name: agastya-backend
-    env: python
+    runtime: python
     region: singapore
     plan: free
     rootDir: backend
@@ -13,25 +13,8 @@ services:
       - key: PYTHON_VERSION
         value: 3.11.9
       - key: FRONTEND_ORIGIN
+        # Initial placeholder; update with the verified Vercel production URL once assigned.
+        # Note: All *.vercel.app subdomains are dynamically permitted by backend regex.
         value: https://agastya.vercel.app
 
-  # AGASTYA Vite React Frontend (Render static preview / backup)
-  - type: web
-    name: agastya-frontend
-    env: static
-    region: singapore
-    plan: free
-    rootDir: frontend
-    buildCommand: "npm install && npm run build"
-    staticPublishPath: "./dist"
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
-    envVars:
-      - key: VITE_API_BASE
-        fromService:
-          type: web
-          name: agastya-backend
-          property: host
 
