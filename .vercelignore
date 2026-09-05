@@ -1,0 +1,5 @@
+# Vercel Ignore File
+# Prevents Vercel from scanning or deploying backend service
+backend/
+render.yaml
+Dockerfile
