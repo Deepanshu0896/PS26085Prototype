@@ -4,7 +4,24 @@
  * routing, choke analysis, and live rain data.
  */
 
-const API_BASE = (import.meta.env.VITE_API_BASE as string) || 'http://localhost:8000';
+/**
+ * Centralized API base URL resolver.
+ * - In Production: uses VITE_API_BASE (normalized, trailing slashes removed).
+ *   Never defaults to localhost in production.
+ * - In Development: defaults to 'http://localhost:8000' only when VITE_API_BASE is unset.
+ */
+export function getApiBaseUrl(): string {
+  const envBase = (import.meta.env.VITE_API_BASE as string | undefined)?.trim();
+  if (envBase) {
+    return envBase.replace(/\/+$/, '');
+  }
+  if (import.meta.env.DEV) {
+    return 'http://localhost:8000';
+  }
+  return '';
+}
+
+export const API_BASE = getApiBaseUrl();
 
 // ─── Types ────────────────────────────────────────────────
 
@@ -142,7 +159,9 @@ export interface RainResponse {
 // ─── API Functions ────────────────────────────────────────
 
 async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<T> {
-  const res = await fetch(`${API_BASE}${endpoint}`, {
+  const normalizedEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+  const url = API_BASE ? `${API_BASE}${normalizedEndpoint}` : normalizedEndpoint;
+  const res = await fetch(url, {
     headers: { 'Content-Type': 'application/json' },
     ...options,
   });

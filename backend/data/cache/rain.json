@@ -2,10 +2,10 @@
   "location": "Minto Bridge, New Delhi",
   "latitude": 28.628,
   "longitude": 77.2197,
-  "timestamp": "2026-09-05T17:56:17.774967",
-  "current_rain_mm": 0.2,
-  "current_temperature_c": 27.2,
-  "wind_speed_kmh": 6.1,
+  "timestamp": "2026-09-05T18:12:45.819933",
+  "current_rain_mm": 0.0,
+  "current_temperature_c": 27.0,
+  "wind_speed_kmh": 6.6,
   "hourly_forecast": [
     {
       "time": "2026-09-05T00:00",
@@ -81,38 +81,38 @@
     },
     {
       "time": "2026-09-05T12:00",
-      "precipitation_mm": 0.4,
-      "rain_mm": 0.0,
-      "weather_code": 95
+      "precipitation_mm": 2.8,
+      "rain_mm": 0.1,
+      "weather_code": 96
     },
     {
       "time": "2026-09-05T13:00",
-      "precipitation_mm": 10.4,
-      "rain_mm": 0.2,
+      "precipitation_mm": 6.3,
+      "rain_mm": 1.4,
       "weather_code": 96
     },
     {
       "time": "2026-09-05T14:00",
-      "precipitation_mm": 2.5,
-      "rain_mm": 2.0,
-      "weather_code": 95
+      "precipitation_mm": 1.8,
+      "rain_mm": 1.8,
+      "weather_code": 80
     },
     {
       "time": "2026-09-05T15:00",
-      "precipitation_mm": 1.1,
-      "rain_mm": 1.1,
-      "weather_code": 55
-    },
-    {
-      "time": "2026-09-05T16:00",
       "precipitation_mm": 0.7,
       "rain_mm": 0.7,
       "weather_code": 53
     },
     {
-      "time": "2026-09-05T17:00",
+      "time": "2026-09-05T16:00",
       "precipitation_mm": 0.2,
       "rain_mm": 0.2,
+      "weather_code": 51
+    },
+    {
+      "time": "2026-09-05T17:00",
+      "precipitation_mm": 0.1,
+      "rain_mm": 0.1,
       "weather_code": 51
     },
     {
